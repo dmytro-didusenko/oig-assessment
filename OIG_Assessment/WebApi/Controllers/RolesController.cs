@@ -1,4 +1,5 @@
-﻿using Application.Role.Commands.Update;
+﻿using Application.Role.Commands.Create;
+using Application.Role.Commands.Update;
 using Domain.Dtos;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +15,26 @@ namespace WebApi.Controllers
         public RolesController(IMediator mediator)
         {
             _mediator = mediator;
+        }
+
+        /// <summary>
+        /// Add Role with permissions
+        /// </summary>
+        /// <param name="role"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> Create([FromBody] CreateRoleDto role, CancellationToken cancellationToken)
+        {
+            var command = new CreateRoleCommand()
+            {
+                Name = role.Name,
+                OrganizationId = role.OrganizationId,
+                RolePermissions = role.Permissions
+            };
+
+            var id = await _mediator.Send(command, cancellationToken);
+            return Ok(id);
         }
 
         /// <summary>
@@ -39,9 +60,9 @@ namespace WebApi.Controllers
                 return Ok(id);
             }
             catch (Exception ex)
-            { 
+            {
                 return BadRequest(ex.Message);
-            }  
+            }
         }
     }
 }

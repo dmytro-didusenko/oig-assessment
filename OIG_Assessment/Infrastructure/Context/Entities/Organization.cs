@@ -3,10 +3,13 @@
     public class Organization : EntityBase
     {
         public string Name { get; set; }
+
         public uint? ParentId { get; set; }
+        //public Organization? Parent { get; set; }
 
+        //public IEnumerable<Organization> Children { get; set; }
 
-        public IEnumerable<User> OrganizationUsers { get; set; }
-        public IEnumerable<Role> OrganizationRoles { get; set; }
+        public IEnumerable<User> Users { get; set; }
+        public IEnumerable<Role> Roles { get; set; }
     }
 }

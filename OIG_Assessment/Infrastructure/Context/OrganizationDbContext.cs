@@ -12,12 +12,22 @@ namespace Infrastructure.Context
         public DbSet<User> Users { get; set; }
         public DbSet<Organization> Organizations { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<RolePermission> RolePermissions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            // Wasn't implemented
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
+
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.Organization)
+                .WithMany(o => o.Users)
+                .HasForeignKey(u => u.OrganizationId);
+
+            // TODO Implement 
         }
     }
 }

@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace Application.User.Validators
 {
-    public class UpdateRoleCommandValidator : AbstractValidator<UpdateUserCommand>
+    public class UpdateUserCommandValidator : AbstractValidator<UpdateUserCommand>
     {
-        public UpdateRoleCommandValidator()
+        public UpdateUserCommandValidator()
         {
             RuleFor(u => u.Id).NotNull().GreaterThan(0u);
             RuleFor(u => u.Name).NotEmpty().MaximumLength(200);

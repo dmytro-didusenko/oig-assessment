@@ -1,11 +1,13 @@
-﻿namespace Infrastructure.Context.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Infrastructure.Context.Entities
 {
     public class User : EntityBase
     {
         public string Name { get; set; }
-        public string Email { get; set; }
-        public uint OrganizationId { get; set; }
+        public string Email { get; set; } 
 
-        public Organization UserOrganization { get; set; }
+        public uint OrganizationId { get; set; }
+        public Organization Organization { get; set; }
     }
 }
