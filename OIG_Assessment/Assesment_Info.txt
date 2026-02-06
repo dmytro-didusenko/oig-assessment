@@ -1,0 +1,10 @@
+Done:
+- created a Blazor Web App solution
+- added an additional ASP.NET Web API project for debugging
+- implemented the initial DDD structure
+- integrated MediatR to support CQRS:
+	- implemented several queries and commands for key entities (User, Organization, and Role) and added controllers with appropriate endpoints for testing
+	- implemented fluent validation for key entities (User, Organization, and Role)
+- implemented logic to retrieve user roles based on organization roles according to the hierarchy
+- implemented logic to retrieve organizations according to their hierarchy
+- implemented logic to display organizations according to their hierarchy using Blazor

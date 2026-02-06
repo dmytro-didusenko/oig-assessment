@@ -1,6 +1,5 @@
 ﻿using Application.Organization.Dtos;
 using Application.Role.Dtos;
-using Infrastructure.Context.Entities;
 
 namespace Application.User.Dtos
 {

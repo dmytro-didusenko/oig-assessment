@@ -1,0 +1,20 @@
+﻿@using Application.Dtos.OrganizationTree
+
+<ul>
+    @foreach (var node in Nodes ?? Enumerable.Empty<OrganizationNode>())
+    {
+        <li>
+            <span>@node.Name (@node.Id)</span>
+
+            @if (node.Children?.Any() == true)
+            {
+                <OrganizationTree Nodes="node.Children" />
+            }
+        </li>
+    }
+</ul>
+
+@code {
+    [Parameter] 
+    public IEnumerable<OrganizationNode>? Nodes { get; set; }
+}

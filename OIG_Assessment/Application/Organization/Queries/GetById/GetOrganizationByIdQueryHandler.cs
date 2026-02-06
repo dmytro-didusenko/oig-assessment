@@ -4,7 +4,7 @@ using Infrastructure.Context;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.Organization.Queries
+namespace Application.Organization.Queries.GetById
 {
     public class GetOrganizationByIdQueryHandler : IRequestHandler<GetOrganizationByIdQuery, OrganizationDto?>
     {

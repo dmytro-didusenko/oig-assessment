@@ -1,7 +1,27 @@
-﻿@page "/"
+﻿@inject IMediator Mediator
+@page "/"
+@using Application.Dtos.OrganizationTree
+@using Application.Organization.Queries.GetHierarchy
+@using MediatR
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<h1>Organizations</h1>
 
-Welcome to your new app.
+@if (_result is null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <OrganizationTree Nodes="_result" />
+}
+
+@code {
+    private IEnumerable<OrganizationNode>? _result;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _result = await Mediator.Send(new GetOrganizationHierarchyQuery());
+    }
+}

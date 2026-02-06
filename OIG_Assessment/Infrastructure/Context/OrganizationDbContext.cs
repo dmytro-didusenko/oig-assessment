@@ -27,7 +27,7 @@ namespace Infrastructure.Context
                 .WithMany(o => o.Users)
                 .HasForeignKey(u => u.OrganizationId);
 
-            // TODO Implement 
+            // TODO Implement relations
         }
     }
 }

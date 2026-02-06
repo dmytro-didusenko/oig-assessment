@@ -1,7 +1,8 @@
 ﻿using Application.User.Commands.Create;
 using Application.User.Commands.Update;
 using Application.User.Dtos;
-using Application.User.Queries;
+using Application.User.Queries.GetById;
+using Application.User.Queries.GetList;
 using Domain.Dtos;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -28,13 +29,13 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<ActionResult> Create([FromBody] CreateUserDto user, CancellationToken cancellationToken = default)
         {
-            var command = new CreateUserCommand() 
-            { 
+            var command = new CreateUserCommand()
+            {
                 Name = user.Name,
                 Email = user.Email,
                 OrganizationId = user.OrganizationId
             };
-            
+
             return Ok(await _mediator.Send(command, cancellationToken));
         }
 
@@ -47,7 +48,7 @@ namespace WebApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<UserDto>> GetById(uint id, CancellationToken cancellationToken = default)
         {
-            var user = await _mediator.Send(new GetUserByIdQuery(id), cancellationToken);
+            var user = await _mediator.Send(new GetUserByIdQuery { Id = id }, cancellationToken);
             return user is null ? NotFound() : Ok(user);
         }
 

@@ -1,9 +1,10 @@
-﻿using Application.Organization.Commands.Create;
+﻿using Application.Dtos.OrganizationTree;
+using Application.Organization.Commands.Create;
 using Application.Organization.Commands.Update;
 using Application.Organization.Dtos;
-using Application.Organization.Queries;
-using Application.User.Dtos;
-using Application.User.Queries;
+using Application.Organization.Queries.GetById;
+using Application.Organization.Queries.GetHierarchy;
+using Application.Organization.Queries.GetList;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -47,7 +48,7 @@ namespace WebApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<OrganizationDto>> GetById(uint id, CancellationToken cancellationToken = default)
         {
-            var organization = await _mediator.Send(new GetOrganizationByIdQuery(id), cancellationToken);
+            var organization = await _mediator.Send(new GetOrganizationByIdQuery { Id = id }, cancellationToken);
             return organization is null ? NotFound() : Ok(organization);
         }
 
@@ -56,10 +57,21 @@ namespace WebApi.Controllers
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet("list")]
         public async Task<ActionResult<IEnumerable<OrganizationDto>>> List(CancellationToken cancellationToken = default)
         {
             return Ok(await _mediator.Send(new GetOrganizationListQuery(), cancellationToken));
+        }
+
+        /// <summary>
+        /// Get Organizations hierarchy list
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpGet("hierarchy")]
+        public async Task<ActionResult<IEnumerable<OrganizationNode>>> HierarchyList(CancellationToken cancellationToken = default)
+        {
+            return Ok(await _mediator.Send(new GetOrganizationHierarchyQuery(), cancellationToken));
         }
 
         /// <summary>

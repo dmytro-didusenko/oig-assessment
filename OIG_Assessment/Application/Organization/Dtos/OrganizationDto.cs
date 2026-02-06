@@ -6,7 +6,7 @@ namespace Application.Organization.Dtos
     {
         public uint Id { get; set; }
         public string Name { get; set; }
-        // TODO Implement (parent/child) hierarchical structure  
+        public uint? ParentId { get; set; }  
         public IEnumerable<RoleDto> Roles { get; set; }
     }
 }

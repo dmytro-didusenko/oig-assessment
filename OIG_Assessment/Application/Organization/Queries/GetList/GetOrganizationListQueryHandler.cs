@@ -4,7 +4,7 @@ using Infrastructure.Context;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.Organization.Queries
+namespace Application.Organization.Queries.GetList
 {
     public class GetOrganizationListQueryHandler : IRequestHandler<GetOrganizationListQuery, IEnumerable<OrganizationDto>>
     {
@@ -18,7 +18,6 @@ namespace Application.Organization.Queries
         public async Task<IEnumerable<OrganizationDto>> Handle(GetOrganizationListQuery request, CancellationToken cancellationToken)
         {
             return await _organizationDbContext.Organizations
-                .Include(r => r.Roles)
                 .Select(o => new OrganizationDto
                 {
                     Id = o.Id,

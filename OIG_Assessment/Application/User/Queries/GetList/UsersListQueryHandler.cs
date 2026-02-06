@@ -1,11 +1,10 @@
 ﻿using Application.Organization.Dtos;
-using Application.Role.Dtos;
 using Application.User.Dtos;
 using Infrastructure.Context;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.User.Queries
+namespace Application.User.Queries.GetList
 {
     public class UsersListQueryHandler : IRequestHandler<UsersListQuery, IEnumerable<UserDto>>
     {
@@ -19,7 +18,7 @@ namespace Application.User.Queries
         public async Task<IEnumerable<UserDto>> Handle(UsersListQuery request, CancellationToken cancellationToken)
         {
             return await _organizationDbContext.Users
-                .Include(o => o.Organization)
+                .AsNoTracking()
                 .Select(u => new UserDto
                 {
                     Id = u.Id,
@@ -30,14 +29,7 @@ namespace Application.User.Queries
                     {
                         Id = u.Organization.Id,
                         Name = u.Organization.Name,
-                    },
-
-                    Roles = u.Organization.Roles.Select(r => new RoleDto
-                    {
-                        Id = r.Id,
-                        Name = r.Name,
-                        Permissions = r.RolePermissions.Select(rp => rp.Permission)
-                    })
+                    }
                 })
                 .ToListAsync(cancellationToken);
         }
